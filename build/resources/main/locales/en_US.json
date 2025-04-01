@@ -1,0 +1,28 @@
+{
+	"label": "Excel Actions ",
+	"description": "Actions related to excel.",
+	"ConvertColumn.label": "Convert Column Type in Excel",
+	"ConvertColumn.description": "Converts the type of values in a specified column range between String and Number in an Excel file.",
+	"ConvertColumn.node_label": "Convert Column Type in Excel: {{columnRange}}",
+	"ConvertColumn.return_label": "Result",
+	"ConvertColumn.inputPath.label": "Input Excel File Path",
+	"ConvertColumn.outputPath.label": "Output Excel File Path",
+	"ConvertColumn.4.1.label": "Text to Number ",
+	"ConvertColumn.4.2.label": "Number to Text",
+	"ConvertColumn.4.1.node_label": "Convert Text to Number ",
+	"ConvertColumn.4.2.node_label": "Convert Number to Text",
+	"BlankRemoval.description": "Deletes all blank cells (row removal) from the specified column in an Excel file and saves the cleaned file.",
+	"BlankRemoval.label": "Remove Blank Cells from Excel",
+	"BlankRemoval.node_label": "Remove blank cells from column {{column}} in Excel",
+	"BlankRemoval.return_label": "Where you want the output file to be saved",
+	"DeleteByCondition.label": "Delete Rows by Condition",
+	"DeleteByCondition.node_label": "Delete rows from Excel where condition is met",
+	"DeleteByCondition.description": "Deletes rows from an Excel file based on a specified condition in a given column",
+	"DeleteByCondition.return_label": "Result",
+	"RemoveDuplicates.label": "Remove Duplicates",
+	"RemoveDuplicates.node_label": "Remove duplicate rows from Excel based on column {{column}}",
+	"RemoveDuplicates.description": "Removes duplicate rows in an Excel file based on a specified column."
+
+
+
+}

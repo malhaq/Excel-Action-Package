@@ -1,0 +1,10 @@
+employee,salary,bonus,Total Salary,designation,Experience (years),Performance
+mohamad,5000.0,500.0,5500.0,software engineer,3.0,Mid-Level
+osama,5500.0,450.0,5950.0,senior developer,5.0,Senior
+mahmoud,4500.0,500.0,5000.0,full-stack developer,4.0,Mid-Level
+ahmad,3500.0,350.0,3850.0,junior developer,1.0,Junior
+khalid,2500.0,600.0,3100.0,mobile developer,2.0,Junior
+fathi,10000.0,1000.0,11000.0,tech lead,10.0,Expert
+subhi,10500.0,1050.0,11550.0,project manager,12.0,Expert
+khalaf,8500.0,900.0,9400.0,backend developer,7.0,Senior
+akho khalaf,7500.0,800.0,8300.0,frontend developer,6.0,Senior
