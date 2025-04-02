@@ -1,5 +1,6 @@
 package com.automationanywhere.botcommand;
 
+
 import com.automationanywhere.botcommand.data.Value;
 import com.automationanywhere.botcommand.data.impl.StringValue;
 import com.automationanywhere.botcommand.exception.BotCommandException;
@@ -10,12 +11,8 @@ import com.automationanywhere.commandsdk.annotations.rules.NotEmpty;
 import com.automationanywhere.commandsdk.i18n.Messages;
 import com.automationanywhere.commandsdk.i18n.MessagesFactory;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.automationanywhere.commandsdk.model.AttributeType.*;
@@ -27,15 +24,15 @@ import static com.automationanywhere.commandsdk.model.DataType.STRING;
 //CommandPks adds required information to be dispalable on GUI.
 @CommandPkg(
         //Unique name inside a package and label to display.
-        name = "RemoveSpecialCharacters", label = "[[RemoveSpecialCharacters.label]]", node_label = "[[RemoveSpecialCharacters.node_label]]", description = "[[RemoveSpecialCharacters.description]]", icon = "excel_icon.svg",
+        name = "ConcatenateTwoColumns", label = "[[ConcatenateTwoColumns.label]]", node_label = "[[ConcatenateTwoColumns.node_label]]", description = "[[ConcatenateTwoColumns.description]]", icon = "excel_icon.svg",
 
         //Return type information. return_type ensures only the right kind of variable is provided on the UI.
-        return_label = "[[RemoveSpecialCharacters.return_label]]", return_type = STRING, return_required = true)
+        return_label = "[[ConcatenateTwoColumns.return_label]]", return_type = STRING, return_required = true)
 
-public class RemoveSpecialCharacters {
+public class ConcatenateTwoColumns {
     //Messages read from full qualified property file name and provide i18n capability.
     private static final Messages MESSAGES = MessagesFactory.getMessages("com.automationanywhere.botcommand.samples.messages");
-    private static final Logger LOGGER = Logger.getLogger(RemoveSpecialCharacters.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ConcatenateTwoColumns.class.getName());
 
     //Identify the entry point for the action. Returns a Value<String> because the return type is String.
     @Execute
@@ -45,65 +42,65 @@ public class RemoveSpecialCharacters {
             @NotEmpty
             String inputFilePath,
 
-
             @Idx(index = "2", type = FILE)
             @Pkg(label = "Output Excel File Path", description = "Path where the modified Excel file will be saved.")
             @NotEmpty
             String outputFilePath,
 
             @Idx(index = "3", type = TEXT)
-            @Pkg(label = "Specified Column (e.g., A)", description = "The column letter used for special character deletion.")
+            @Pkg(label = "First Column (e.g., A)", description = "The column letter used for the first column to concatenate.")
             @NotEmpty
-            String column,
+            String firstColumn,
 
             @Idx(index = "4", type = TEXT)
-            @Pkg(label = "Special character to be deleted (e.g., -, \", ', /, @, etc.)", description = "The special character that will be deleted from the column")
+            @Pkg(label = "Second Column (e.g., B)", description = "The column letter used for the second column to concatenate.")
             @NotEmpty
-            String specialCharacter
+            String secondColumn,
+
+            @Idx(index = "5", type = TEXT)
+            @Pkg(label = "Concatenation Result Column (e.g., C)", description = "The column letter used for special character deletion.")
+            @NotEmpty
+            String outputColumn
 
 
     ) {
 
         try (Workbook workbook = ExcelUtils.openWorkbook(inputFilePath)) {
-            specialCharacter = specialCharacter.trim();
-            if (specialCharacter.length() > 1 ) {
-                throw new BotCommandException("Invalid input: Enter exactly one special character (e.g., -, @, /, #, etc.). Multiple characters are not allowed.");
-            }
-            if(Character.isLetter(specialCharacter.charAt(0))){
-                throw new BotCommandException("Invalid input: Spacial character cannot be a letter.");
-            }
+
             Sheet sheet = workbook.getSheetAt(0);
             int startRow = 0;
             int endRow = sheet.getLastRowNum();
-            int startColumn = ExcelUtils.columnLetterToIndex(column);
-
-
+            int startColumn = ExcelUtils.columnLetterToIndex(firstColumn);
+            int endColumn = ExcelUtils.columnLetterToIndex(secondColumn);
+            int targetColumn = ExcelUtils.columnLetterToIndex(outputColumn);
+            if (startColumn == endColumn) {
+                throw new BotCommandException("First and second columns cannot be the same.");
+            } else if (targetColumn == startColumn || targetColumn == endColumn) {
+                throw new BotCommandException("Output column cannot be the same as an input column.");
+            }
             for (int rowNum = startRow; rowNum <= endRow; rowNum++) {
                 Row row = sheet.getRow(rowNum);
                 if (row == null) continue;
-                Cell cell = row.getCell(startColumn, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                String val;
+                Cell cell = row.getCell(startColumn, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);//first part of the concatenated String
+                Cell cell2 = row.getCell(endColumn, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);//second part of the concatenated String
+                Cell cell3 = row.getCell(targetColumn, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);//concatenated String
+                String val, val2, finalVal;
                 if (cell.getCellType() == CellType.NUMERIC) {
                     val = String.valueOf(cell.getNumericCellValue());
+                    val2 = String.valueOf(cell2.getNumericCellValue());
                 } else {
                     val = cell.getStringCellValue();
-//                    System.out.println(val);
+                    val2 = cell2.getStringCellValue();
                 }
-                val = val.replace(specialCharacter, "");
-                cell.setCellValue(val);
-//                System.out.println("");
-
+                finalVal = val + val2;
+                cell3.setCellValue(finalVal);
             }
-
             try (FileOutputStream fos = new FileOutputStream(outputFilePath)) {
                 workbook.write(fos);
             }
-
             return new StringValue("Output Saved as: " + outputFilePath);
         } catch (IOException e) {
             throw new BotCommandException("File processing error: " + e.getMessage());
         }
     }
-
-
 }
