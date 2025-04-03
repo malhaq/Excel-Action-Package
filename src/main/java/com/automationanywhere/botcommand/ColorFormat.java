@@ -21,7 +21,7 @@ import static com.automationanywhere.commandsdk.model.DataType.STRING;
 //CommandPks adds required information to be dispalable on GUI.
 @CommandPkg(
         //Unique name inside a package and label to display.
-        name = "ColorFormate", label = "[[ColorFormate.label]]", node_label = "[[ColorFormate.node_label]]", description = "[[ColorFormate.description]]", icon = "excel_icon.svg",
+        name = "ColorFormat", label = "[[ColorFormate.label]]", node_label = "[[ColorFormate.node_label]]", description = "[[ColorFormate.description]]", icon = "excel_icon.svg",
 
         //Return type information. return_type ensures only the right kind of variable is provided on the UI.
         return_label = "[[ColorFormate.return_label]]", return_type = STRING, return_required = true)
@@ -36,12 +36,12 @@ public class ColorFormat {
     @Execute
     public Value<String> action(
             @Idx(index = "1", type = FILE)
-            @Pkg(label = "Input Excel File Path")
+            @Pkg(label = "File path of the input Excel file")
             @NotEmpty
             String inputFilePath,
 
             @Idx(index = "2", type = FILE)
-            @Pkg(label = "Output Excel File Path")
+            @Pkg(label = "File path to save the modified Excel file")
             @NotEmpty
             String outputFilePath,
 
@@ -49,12 +49,12 @@ public class ColorFormat {
                     @Idx.Option(index = "3.1", pkg = @Pkg(label = "By Column", node_label = "Color the cells in {{range}}", value = "Column")),
                     @Idx.Option(index = "3.2", pkg = @Pkg(label = "By Row", node_label = "Color all cells in row{{range}}", value = "Row"))
             })
-            @Pkg(label = "Color cells")
+            @Pkg(label = "Select whether to color by column or row")
             @NotEmpty
             String Condition,
 
             @Idx(index = "4", type = TEXT)
-            @Pkg(description="(By Column: e.g A1:C5, A1, A)(By Row support only integer values: e.g 1:14 , 5) ",label = "Range")
+            @Pkg(description="(By Column: e.g. A1:C5, A1, A) (By Row: only integer values e.g. 1:14, 5)",label = "Range")
             @NotEmpty
             String range,
 
@@ -108,7 +108,7 @@ public class ColorFormat {
                     @Idx.Option(index = "5.47", pkg = @Pkg(label = "INDIGO", value = "62")),
                     @Idx.Option(index = "5.48", pkg = @Pkg(label = "GREY_80_PERCENT", value = "63")),
             })
-            @Pkg(label = "Color cells")
+            @Pkg(label = "Select a color for highlighting the cells")
             @NotEmpty
             String colorIndx
 

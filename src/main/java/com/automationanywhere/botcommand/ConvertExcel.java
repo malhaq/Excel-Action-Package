@@ -44,23 +44,24 @@ public class ConvertExcel {
     @Execute
     public Value<String> action(
             @Idx(index = "1", type = FILE)
-            @Pkg(label = "Input File Path")
+            @Pkg(label = "Input File",description = "Path to the Excel or CSV file to be converted.")
             @NotEmpty
             String inputFilePath,
 
 
             @Idx(index = "2", type = FILE)
-            @Pkg(label = "Output File Path")
+            @Pkg(label = "Output File", description = "Path where the converted file will be saved.")
             @NotEmpty
             String outputFilePath,
 
             @Idx(index = "3", type = SELECT, options = {
-                    @Idx.Option(index = "3.1", pkg = @Pkg(label = "XLS to XLSX", node_label = "", value = "XLStoXLSX")),
-                    @Idx.Option(index = "3.2", pkg = @Pkg(label = "XLSX to CSV", node_label = "", value = "XLSXtoCSV")),
-                    @Idx.Option(index = "3.3", pkg = @Pkg(label = "XLS to CSV", node_label = "", value = "XLStoCSV")),
-                    @Idx.Option(index = "3.4", pkg = @Pkg(label = "CSV to XLSX", node_label = "", value = "CSVtoXLSX"))
+                    @Idx.Option(index = "3.1", pkg = @Pkg(label = "Excel (.xls) to Excel (.xlsx)", value = "XLStoXLSX")),
+                    @Idx.Option(index = "3.2", pkg = @Pkg(label = "Excel (.xlsx) to CSV", value = "XLSXtoCSV")),
+                    @Idx.Option(index = "3.3", pkg = @Pkg(label = "Excel (.xls) to CSV",  value = "XLStoCSV")),
+                    @Idx.Option(index = "3.4", pkg = @Pkg(label = "CSV to Excel (.xlsx)", value = "CSVtoXLSX"))
+
             })
-            @Pkg(label = "Conversion Type")
+            @Pkg(label = "Conversion Type", description = "Select the type of conversion to perform.")
             @NotEmpty
             String conversionType
 

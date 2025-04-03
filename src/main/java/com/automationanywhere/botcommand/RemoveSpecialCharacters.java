@@ -41,7 +41,7 @@ public class RemoveSpecialCharacters {
     @Execute
     public Value<String> action(
             @Idx(index = "1", type = FILE)
-            @Pkg(label = "Input Excel File Path", description = "Path to the input Excel file.")
+            @Pkg(label = "Input Excel File Path", description = "Specify the full path of the Excel file to be modified.")
             @NotEmpty
             String inputFilePath,
 
@@ -52,12 +52,12 @@ public class RemoveSpecialCharacters {
             String outputFilePath,
 
             @Idx(index = "3", type = TEXT)
-            @Pkg(label = "Specified Column (e.g., A)", description = "The column letter used for special character deletion.")
+            @Pkg(label = "Target Column", description = "Enter the column letter (e.g., A, B, C) from which special characters should be removed.")
             @NotEmpty
             String column,
 
             @Idx(index = "4", type = TEXT)
-            @Pkg(label = "Special character to be deleted (e.g., -, \", ', /, @, etc.)", description = "The special character that will be deleted from the column")
+            @Pkg(label = "Special Character", description = "Specify the special character (e.g., -, \", ', /, @, etc.) to be removed.")
             @NotEmpty
             String specialCharacter
 

@@ -21,7 +21,26 @@
 	"DeleteByCondition.return_label": "Result",
 	"RemoveDuplicates.label": "Remove Duplicates",
 	"RemoveDuplicates.node_label": "Remove duplicate rows from Excel based on column {{column}}",
-	"RemoveDuplicates.description": "Removes duplicate rows in an Excel file based on a specified column."
+	"RemoveDuplicates.description": "Removes duplicate rows in an Excel file based on a specified column.",
+	"RemoveSpecialCharacters.label": "Remove Special Characters",
+	"RemoveSpecialCharacters.node_label": "Remove special characters from column {{column}} in Excel",
+	"RemoveSpecialCharacters.description": "Removes a specific special character from all cells in the given column of an Excel file",
+	"RemoveSpecialCharacters. return_label": "Path of the modified Excel file",
+	"ColorFormate.label": "Excel Color Formatter",
+	"ColorFormate.node_label" : "Apply Color Formatting in Excel",
+	"ColorFormate.description": "Applies color formatting to specified cells in an Excel sheet based on column or row selection.",
+	"ColorFormate.return_label": "Formatted Excel File Path",
+	"ConcatenateTwoColumns.label": "Concatenate Two Columns",
+	"ConcatenateTwoColumns.node_label": "Concatenate columns {{firstColumn}} and {{secondColumn}} into {{outputColumn}}",
+	"ConcatenateTwoColumns.description": "This command takes two specified columns from an Excel file, concatenates their values, and writes the result into a specified output column.",
+	"ConcatenateTwoColumns.return_label": "Output File Path",
+	"ConvertExcel.label": "Convert Excel and CSV Files",
+	"ConvertExcel.node_label":"Convert file {{inputFilePath}} to format {{conversionType}}",
+	"ConvertExcel.description": "Converts Excel (.xls, .xlsx) and CSV files between different formats.",
+	"ConvertExcel.return_label": "Converted File Path"
+
+
+
 
 
 
