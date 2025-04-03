@@ -27,7 +27,7 @@ import static com.automationanywhere.commandsdk.model.DataType.STRING;
         return_label = "[[ColorFormate.return_label]]", return_type = STRING, return_required = true)
 
 
-public class ColorFormate {
+public class ColorFormat {
     //Messages read from full qualified property file name and provide i18n capability.
     private static final Messages MESSAGES = MessagesFactory.getMessages("com.automationanywhere.botcommand.samples.messages");
     private static final Logger LOGGER = Logger.getLogger(DeleteByCondition.class.getName());
@@ -144,7 +144,7 @@ public class ColorFormate {
                     if (range.matches(".*\\d.*")) {
                         int digitIndx = firstDigitIndex(range);
                         startColumn = ExcelUtils.columnLetterToIndex(range.substring(0, digitIndx));
-                        startRow = Integer.parseInt(range.substring(digitIndx).trim());
+                        startRow = Integer.parseInt(range.substring(digitIndx).trim())-1;
                     }else {
                         startColumn = ExcelUtils.columnLetterToIndex(range);
                     }
@@ -158,7 +158,7 @@ public class ColorFormate {
                     if(!range.matches("\\d+")){
                         throw new BotCommandException("Row value must be a number or a range of numbers.");
                     }
-                    startRow = Integer.parseInt(range);
+                    startRow = Integer.parseInt(range)-1;
                     Row row = sheet.getRow(startRow);
                     endColumn = row.getLastCellNum();
                     for(int i = startColumn; i <= endColumn; i++) {
@@ -169,9 +169,11 @@ public class ColorFormate {
 
             }else {
                 String [] array = range.split(":");
+                System.out.println(array[0]);
+                System.out.println(array[1]);
                 if (Condition == "Row") {
-                    startRow = Integer.parseInt(array[0]);
-                    endRow = Integer.parseInt(array[1]);
+                    startRow = Integer.parseInt(array[0])-1;
+                    endRow = Integer.parseInt(array[1])-1;
                     for (int rowNum = startRow; rowNum <= endRow; rowNum++) {
                         Row row = sheet.getRow(rowNum);
                         endColumn = row.getLastCellNum();
@@ -183,15 +185,20 @@ public class ColorFormate {
                 } else {
                     if (array[0].matches(".*\\d.*")) {
                         int digitIndx = firstDigitIndex(array[0]);
-                        startColumn = ExcelUtils.columnLetterToIndex(array[0].substring(0, digitIndx));
-                        startRow = Integer.parseInt(array[0].substring(digitIndx).trim());
+                        System.out.println(array[0].substring(0, digitIndx));
+                        System.out.println(array[0].substring(digitIndx).trim());
+                        String columnLetter = (array[0] != null) ? array[0].substring(0, digitIndx) : null;
+                        System.out.println(columnLetter);
+                        startColumn = ExcelUtils.columnLetterToIndex(columnLetter);
+                        startRow = Integer.parseInt(array[0].substring(digitIndx).trim())-1;
                     }else {
                         startColumn = ExcelUtils.columnLetterToIndex(array[0]);
                     }
                     if (array[1].matches(".*\\d.*")) {
                         int digitIndx = firstDigitIndex(array[1]);
-                        endColumn = ExcelUtils.columnLetterToIndex(array[1].substring(1, digitIndx));
-                        endRow = Integer.parseInt(array[1].substring(digitIndx).trim());
+//                        String columnLetter = (array[0] != null) ? array[1].substring(0, digitIndx) : null;
+                        endColumn = ExcelUtils.columnLetterToIndex(array[1].substring(0, digitIndx));
+                        endRow = Integer.parseInt(array[1].substring(digitIndx).trim())-1;
                     }else {
                         endColumn = ExcelUtils.columnLetterToIndex(array[1]);
                     }

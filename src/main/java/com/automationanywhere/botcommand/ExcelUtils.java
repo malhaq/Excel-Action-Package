@@ -17,11 +17,12 @@ public class ExcelUtils {
      * Converts a column letter to its 0-based index (A=0, B=1, ..., Z=25, AA=26).
      */
     public static int columnLetterToIndex(String letters) {
+        letters = letters.toUpperCase(); // Ensure uppercase
+        System.out.println(letters);
         if (letters == null || !letters.matches("[A-Z]+")) {
             throw new BotCommandException("Invalid column letters: " + letters);
         }
 
-        letters = letters.toUpperCase(); // Ensure uppercase
         int index = 0;
 
         for (char c : letters.toCharArray()) {
@@ -30,7 +31,7 @@ public class ExcelUtils {
             }
             index = index * 26 + (c - 'A' + 1);
         }
-
+        System.out.println(index);
         return index - 1;  // Convert to 0-based index
     }
 
