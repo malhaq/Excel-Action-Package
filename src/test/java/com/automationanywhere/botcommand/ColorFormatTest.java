@@ -67,9 +67,21 @@ class ColorFormatTest {
     }
 
     @Test
+    void testvalidRowRangeFormat() {
+        String inputFilePath = "src/test/resources/test_files/originals/valid_input.xlsx";
+        String outputFilePath = "src/test/resources/test_files/ColorFormat/output4.xlsx";
+        String condition = "Row";
+        String range = "1:5"; // Invalid format
+        String colorIndex = "15";
+
+        assertDoesNotThrow(() -> colorFormat.action(inputFilePath, outputFilePath, condition, range, colorIndex));
+        assertTrue(new File(outputFilePath).exists());
+    }
+
+    @Test
     void testFileNotFound() {
         String inputFilePath = "src/test/resources/test_files/non_existent.xlsx";
-        String outputFilePath = "src/test/resources/test_files/ColorFormat/output4.xlsx";
+        String outputFilePath = "src/test/resources/test_files/ColorFormat/output5.xlsx";
         String condition = "Column";
         String range = "A";
         String colorIndex = "10";

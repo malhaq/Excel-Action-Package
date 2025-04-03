@@ -177,7 +177,7 @@ public class ColorFormat {
                     for (int rowNum = startRow; rowNum <= endRow; rowNum++) {
                         Row row = sheet.getRow(rowNum);
                         endColumn = row.getLastCellNum();
-                        for(int i = startColumn; i <= endColumn; i++) {
+                        for(int i = startColumn; i < endColumn; i++) {
                             Cell cell = row.getCell(i,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
                             cell.setCellStyle(style);
                         }
