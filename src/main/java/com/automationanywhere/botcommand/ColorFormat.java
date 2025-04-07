@@ -28,8 +28,7 @@ import static com.automationanywhere.commandsdk.model.DataType.STRING;
 
 
 public class ColorFormat {
-    //Messages read from full qualified property file name and provide i18n capability.
-    private static final Messages MESSAGES = MessagesFactory.getMessages("com.automationanywhere.botcommand.samples.messages");
+
     private static final Logger LOGGER = Logger.getLogger(DeleteByCondition.class.getName());
 
     //Identify the entry point for the action. Returns a Value<String> because the return type is String.

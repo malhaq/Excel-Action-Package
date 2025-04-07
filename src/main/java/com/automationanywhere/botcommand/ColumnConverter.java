@@ -30,8 +30,7 @@ import static com.automationanywhere.commandsdk.model.DataType.STRING;
         //Return type information. return_type ensures only the right kind of variable is provided on the UI.
         return_label = "[[ConvertColumn.return_label]]", return_type = STRING, return_required = true)
 public class ColumnConverter {
-    //Messages read from full qualified property file name and provide i18n capability.
-    private static final Messages MESSAGES = MessagesFactory.getMessages("com.automationanywhere.botcommand.samples.messages");
+
     private static final Logger LOGGER = Logger.getLogger(ColumnConverter.class.getName());
 
     //Identify the entry point for the action. Returns a Value<String> because the return type is String.

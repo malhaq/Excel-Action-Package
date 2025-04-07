@@ -38,7 +38,6 @@ import static com.automationanywhere.commandsdk.model.DataType.STRING;
 
 
 public class ConvertExcel {
-    private static final Messages MESSAGES = MessagesFactory.getMessages("com.automationanywhere.botcommand.samples.messages");
     private static final Logger LOGGER = Logger.getLogger(DeleteByCondition.class.getName());
 
     @Execute
