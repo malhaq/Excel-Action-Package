@@ -48,7 +48,7 @@ public class ConvertExcel {
             String inputFilePath,
 
 
-            @Idx(index = "2", type = FILE)
+            @Idx(index = "2", type = TEXT)
             @Pkg(label = "Output File", description = "Path where the converted file will be saved.")
             @NotEmpty
             String outputFilePath,

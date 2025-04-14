@@ -39,7 +39,7 @@ public class ColorFormat {
             @NotEmpty
             String inputFilePath,
 
-            @Idx(index = "2", type = FILE)
+            @Idx(index = "2", type = TEXT)
             @Pkg(label = "File path to save the modified Excel file")
             @NotEmpty
             String outputFilePath,

@@ -44,7 +44,7 @@ public class DeleteByCondition {
             String inputFilePath,
 
 
-            @Idx(index = "2", type = FILE)
+            @Idx(index = "2", type = TEXT)
             @Pkg(label = "Output Excel File Path")
             @NotEmpty
             String outputFilePath,

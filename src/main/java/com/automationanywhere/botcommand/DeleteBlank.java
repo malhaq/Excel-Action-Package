@@ -36,7 +36,7 @@ public class DeleteBlank {
     @Execute
     public Value<String> action(@Idx(index = "1", type = FILE) @Pkg(label = "Input Excel File Path") @NotEmpty String inputFilePath,
 
-                                @Idx(index = "2", type = FILE) @Pkg(label = "Output Excel File Path") @NotEmpty String outputFilePath,
+                                @Idx(index = "2", type = TEXT) @Pkg(label = "Output Excel File Path") @NotEmpty String outputFilePath,
 
                                 @Idx(index = "3", type = TEXT) @Pkg(label = "Specified Column (e.g., A)") @NotEmpty String column
 
