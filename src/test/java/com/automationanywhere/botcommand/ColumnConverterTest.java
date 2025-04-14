@@ -20,34 +20,34 @@ class ColumnConverterTest {
     @Test
     void testValidStringToNumberConversion() {
         String inputFilePath = "src/test/resources/test_files/originals/valid_input.xlsx";
-        String outputFilePath = "src/test/resources/test_files/Column_Convert/output.xlsx";
+//        String outputFilePath = "src/test/resources/test_files/Column_Convert/output.xlsx";
         String columnRange = "A,C";
         String conversionType = "StringToNumber";
 
-        assertDoesNotThrow(() -> columnConverter.action(inputFilePath, outputFilePath, columnRange, conversionType));
+        assertDoesNotThrow(() -> columnConverter.action(inputFilePath, columnRange, conversionType));
         assertTrue(new File(outputFilePath).exists());
     }
 
     @Test
     void testValidNumberToStringConversion() {
         String inputFilePath = "src/test/resources/test_files/originals/valid_input.xlsx";
-        String outputFilePath = "src/test/resources/test_files/Column_Convert/output1.xlsx";
+//        String outputFilePath = "src/test/resources/test_files/Column_Convert/output1.xlsx";
         String columnRange = "B,D";
         String conversionType = "NumberToString";
 
-        assertDoesNotThrow(() -> columnConverter.action(inputFilePath, outputFilePath, columnRange, conversionType));
+        assertDoesNotThrow(() -> columnConverter.action(inputFilePath, columnRange, conversionType));
         assertTrue(new File(outputFilePath).exists());
     }
 
     @Test
     void testInvalidColumnRangeFormat() {
         String inputFilePath = "src/test/resources/test_files/originals/valid_input.xlsx";
-        String outputFilePath = "src/test/resources/test_files/Column_Convert/output2.xlsx";
+//        String outputFilePath = "src/test/resources/test_files/Column_Convert/output2.xlsx";
         String columnRange = "A"; // Invalid format
         String conversionType = "StringToNumber";
 
         Exception exception = assertThrows(BotCommandException.class, () -> {
-            columnConverter.action(inputFilePath, outputFilePath, columnRange, conversionType);
+            columnConverter.action(inputFilePath, columnRange, conversionType);
         });
 
 
@@ -57,12 +57,12 @@ class ColumnConverterTest {
     @Test
     void testInvalidColumnLetters() {
         String inputFilePath = "src/test/resources/test_files/originals/valid_input.xlsx";
-        String outputFilePath = "src/test/resources/test_files/Column_Convert/output3.xlsx";
+//        String outputFilePath = "src/test/resources/test_files/Column_Convert/output3.xlsx";
         String columnRange = "1,E"; // Invalid column
         String conversionType = "NumberToString";
 
         Exception exception = assertThrows(BotCommandException.class, () -> {
-            columnConverter.action(inputFilePath, outputFilePath, columnRange, conversionType);
+            columnConverter.action(inputFilePath, columnRange, conversionType);
         });
 
         assertEquals("Invalid column letters: 1", exception.getMessage());
@@ -71,12 +71,12 @@ class ColumnConverterTest {
     @Test
     void testStartColumnGreaterThanEndColumn() {
         String inputFilePath = "src/test/resources/test_files/originals/valid_input.xlsx";
-        String outputFilePath = "src/test/resources/test_files/Column_Convert/output4.xlsx";
+//        String outputFilePath = "src/test/resources/test_files/Column_Convert/output4.xlsx";
         String columnRange = "E,A"; // Start column is greater than end column
         String conversionType = "StringToNumber";
 
         Exception exception = assertThrows(BotCommandException.class, () -> {
-           columnConverter.action(inputFilePath, outputFilePath, columnRange, conversionType);
+           columnConverter.action(inputFilePath, columnRange, conversionType);
         });
 
         assertEquals("Start column cannot be greater than end column.", exception.getMessage());
@@ -85,12 +85,12 @@ class ColumnConverterTest {
     @Test
     void testFileNotFound() {
         String inputFilePath = "test_files/non_existent.xlsx";
-        String outputFilePath = "C:\\Users\\malhaq\\OneDrive - Air Arabia Group\\Desktop\\ExcelColumnConvert\\src\\test\\resources\\test_files\\output5.xlsx";
+//        String outputFilePath = "C:\\Users\\malhaq\\OneDrive - Air Arabia Group\\Desktop\\ExcelColumnConvert\\src\\test\\resources\\test_files\\output5.xlsx";
         String columnRange = "A,B";
         String conversionType = "StringToNumber";
 
         Exception exception = assertThrows(BotCommandException.class, () -> {
-            columnConverter.action(inputFilePath, outputFilePath, columnRange, conversionType);
+            columnConverter.action(inputFilePath, columnRange, conversionType);
         });
 
         assertTrue(exception.getMessage().contains("File processing error"));
@@ -99,11 +99,11 @@ class ColumnConverterTest {
     @Test
     void testValidStringToNumberConversion2() {
         String inputFilePath = "src/test/resources/test_files/originals/valid_input.xlsx";
-        String outputFilePath = "src/test/resources/test_files/Column_Convert/output10.xlsx";
+//        String outputFilePath = "src/test/resources/test_files/Column_Convert/output10.xlsx";
         String columnRange = "B,D";
         String conversionType = "StringToNumber";
 
-        assertDoesNotThrow(() -> columnConverter.action(inputFilePath, outputFilePath, columnRange, conversionType));
+        assertDoesNotThrow(() -> columnConverter.action(inputFilePath, columnRange, conversionType));
         assertTrue(new File(outputFilePath).exists());
     }
 }

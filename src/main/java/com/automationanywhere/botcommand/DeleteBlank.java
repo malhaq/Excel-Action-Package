@@ -36,9 +36,9 @@ public class DeleteBlank {
     @Execute
     public Value<String> action(@Idx(index = "1", type = FILE) @Pkg(label = "Input Excel File Path") @NotEmpty String inputFilePath,
 
-                                @Idx(index = "2", type = TEXT) @Pkg(label = "Output Excel File Path") @NotEmpty String outputFilePath,
+//                                @Idx(index = "2", type = TEXT) @Pkg(label = "Output Excel File Path") @NotEmpty String outputFilePath,
 
-                                @Idx(index = "3", type = TEXT) @Pkg(label = "Specified Column (e.g., A)") @NotEmpty String column
+                                @Idx(index = "2", type = TEXT) @Pkg(label = "Specified Column (e.g., A)") @NotEmpty String column
 
     ) {
         try (Workbook workbook = ExcelUtils.openWorkbook(inputFilePath)) {
@@ -63,11 +63,11 @@ public class DeleteBlank {
 
             }
 
-            try (FileOutputStream fos = new FileOutputStream(outputFilePath)) {
+            try (FileOutputStream fos = new FileOutputStream(inputFilePath)) {
                 workbook.write(fos);
             }
 
-            return new StringValue("blank cell detection completed all duplicates have been deleted. Output Saved as: " + outputFilePath);
+            return new StringValue("blank cell detection completed all duplicates have been deleted. Output Saved as: " + inputFilePath);
         } catch (IOException e) {
             throw new BotCommandException("File processing error: " + e.getMessage());
         }

@@ -44,12 +44,12 @@ public class RemoveDuplicates {
             String inputFilePath,
 
 
-            @Idx(index = "2", type = TEXT)
-            @Pkg(label = "Output Excel File Path",description = "Path where the modified Excel file will be saved.")
-            @NotEmpty
-            String outputFilePath,
+//            @Idx(index = "2", type = TEXT)
+//            @Pkg(label = "Output Excel File Path",description = "Path where the modified Excel file will be saved.")
+//            @NotEmpty
+//            String outputFilePath,
 
-            @Idx(index = "3", type = TEXT)
+            @Idx(index = "2", type = TEXT)
             @Pkg(label = "Specified Column (e.g., A)",description = "The column letter used for duplicate detection.")
             @NotEmpty
             String column
@@ -86,11 +86,11 @@ public class RemoveDuplicates {
                 }
             }
 
-            try (FileOutputStream fos = new FileOutputStream(outputFilePath)) {
+            try (FileOutputStream fos = new FileOutputStream(inputFilePath)) {
                 workbook.write(fos);
             }
 
-            return new StringValue("Duplicate detection completed all duplicates have been deleted. Output Saved as: " + outputFilePath);
+            return new StringValue("Duplicate detection completed all duplicates have been deleted. Output Saved as: " + inputFilePath);
         } catch (IOException e) {
             throw new BotCommandException("File processing error: " + e.getMessage());
         }

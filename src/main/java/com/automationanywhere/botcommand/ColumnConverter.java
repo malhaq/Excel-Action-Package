@@ -41,19 +41,19 @@ public class ColumnConverter {
             @NotEmpty
             String inputFilePath,
 
-            @Idx(index = "2", type = TEXT)
-            @Pkg(description = "Provide the full path you want the out put file to be stored in." ,label = "[[ConvertColumn.outputPath.label]]")
-            @NotEmpty
-            String outputFilePath,
+//            @Idx(index = "2", type = TEXT)
+//            @Pkg(description = "Provide the full path you want the out put file to be stored in." ,label = "[[ConvertColumn.outputPath.label]]")
+//            @NotEmpty
+//            String outputFilePath,
 
-            @Idx(index = "3", type = TEXT)
+            @Idx(index = "2", type = TEXT)
             @Pkg(label = "Column Range (e.g., A,E)")
             @NotEmpty
             String columnRange,
 
-            @Idx(index = "4", type = SELECT, options = {
-                    @Idx.Option(index = "4.1",pkg = @Pkg(node_label = "[[ConvertColumn.4.1.node_label]]", label = "[[ConvertColumn.4.1.label]]", value = "StringToNumber")),
-                    @Idx.Option(index = "4.2",pkg = @Pkg(node_label = "[[ConvertColumn.4.2.node_label]]", label = "[[ConvertColumn.4.2.label]]", value = "NumberToString"))
+            @Idx(index = "3", type = SELECT, options = {
+                    @Idx.Option(index = "3.1",pkg = @Pkg(node_label = "[[ConvertColumn.4.1.node_label]]", label = "[[ConvertColumn.4.1.label]]", value = "StringToNumber")),
+                    @Idx.Option(index = "3.2",pkg = @Pkg(node_label = "[[ConvertColumn.4.2.node_label]]", label = "[[ConvertColumn.4.2.label]]", value = "NumberToString"))
             })
             @Pkg(label = "Conversion Type")
             @NotEmpty
@@ -99,11 +99,11 @@ public class ColumnConverter {
                 }
             }
 
-            try (FileOutputStream fos = new FileOutputStream(outputFilePath)) {
+            try (FileOutputStream fos = new FileOutputStream(inputFilePath)) {
                 workbook.write(fos);
             }
 
-            return new StringValue("Conversion completed. Saved as: " + outputFilePath);
+            return new StringValue("Conversion completed. Saved as: " + inputFilePath);
         } catch (IOException e) {
             throw new BotCommandException("File processing error: " + e.getMessage());
         }

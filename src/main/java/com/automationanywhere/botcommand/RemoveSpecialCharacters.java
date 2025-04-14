@@ -44,17 +44,17 @@ public class RemoveSpecialCharacters {
             String inputFilePath,
 
 
-            @Idx(index = "2", type = TEXT)
-            @Pkg(label = "Output Excel File Path", description = "Path where the modified Excel file will be saved.")
-            @NotEmpty
-            String outputFilePath,
+//            @Idx(index = "2", type = TEXT)
+//            @Pkg(label = "Output Excel File Path", description = "Path where the modified Excel file will be saved.")
+//            @NotEmpty
+//            String outputFilePath,
 
-            @Idx(index = "3", type = TEXT)
+            @Idx(index = "2", type = TEXT)
             @Pkg(label = "Target Column", description = "Enter the column letter (e.g., A, B, C) from which special characters should be removed.")
             @NotEmpty
             String column,
 
-            @Idx(index = "4", type = TEXT)
+            @Idx(index = "3", type = TEXT)
             @Pkg(label = "Special Character", description = "Specify the special character (e.g., -, \", ', /, @, etc.) to be removed.")
             @NotEmpty
             String specialCharacter
@@ -93,11 +93,11 @@ public class RemoveSpecialCharacters {
 
             }
 
-            try (FileOutputStream fos = new FileOutputStream(outputFilePath)) {
+            try (FileOutputStream fos = new FileOutputStream(inputFilePath)) {
                 workbook.write(fos);
             }
 
-            return new StringValue("Output Saved as: " + outputFilePath);
+            return new StringValue("Output Saved as: " + inputFilePath);
         } catch (IOException e) {
             throw new BotCommandException("File processing error: " + e.getMessage());
         }

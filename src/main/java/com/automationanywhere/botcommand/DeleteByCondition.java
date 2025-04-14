@@ -44,27 +44,27 @@ public class DeleteByCondition {
             String inputFilePath,
 
 
-            @Idx(index = "2", type = TEXT)
-            @Pkg(label = "Output Excel File Path")
-            @NotEmpty
-            String outputFilePath,
+//            @Idx(index = "2", type = TEXT)
+//            @Pkg(label = "Output Excel File Path")
+//            @NotEmpty
+//            String outputFilePath,
 
-            @Idx(index = "3", type = TEXT)
+            @Idx(index = "2", type = TEXT)
             @Pkg(label = "Specified Column (e.g., A)")
             @NotEmpty
             String column,
 
-            @Idx(index = "4", type = SELECT, options = {
-                    @Idx.Option(index = "4.1", pkg = @Pkg(label = "Equals (=)", node_label = "Delete where cell value equals {{criteriaValue}}", value = "Equals to =")),
-                    @Idx.Option(index = "4.2", pkg = @Pkg(label = "Doesn't equal (!=)", node_label = "Delete where cell value does not equal {{criteriaValue}}", value = "Doesn't equals !=")),
-                    @Idx.Option(index = "4.3", pkg = @Pkg(label = "Contains", node_label = "Delete where cell value contains {{criteriaValue}}", value = "Contain")),
-                    @Idx.Option(index = "4.4", pkg = @Pkg(label = "Doesn't contain", node_label = "Delete where cell value does not contain {{criteriaValue}}", value = "Doesn't Contain"))
+            @Idx(index = "3", type = SELECT, options = {
+                    @Idx.Option(index = "3.1", pkg = @Pkg(label = "Equals (=)", node_label = "Delete where cell value equals {{criteriaValue}}", value = "Equals to =")),
+                    @Idx.Option(index = "3.2", pkg = @Pkg(label = "Doesn't equal (!=)", node_label = "Delete where cell value does not equal {{criteriaValue}}", value = "Doesn't equals !=")),
+                    @Idx.Option(index = "3.3", pkg = @Pkg(label = "Contains", node_label = "Delete where cell value contains {{criteriaValue}}", value = "Contain")),
+                    @Idx.Option(index = "3.4", pkg = @Pkg(label = "Doesn't contain", node_label = "Delete where cell value does not contain {{criteriaValue}}", value = "Doesn't Contain"))
             })
             @Pkg(label = "Condition")
             @NotEmpty
             String Condition,
 
-            @Idx(index = "5", type = TEXT)
+            @Idx(index = "4", type = TEXT)
             @Pkg(label = "Criteria Value ")
             @NotEmpty
             String criteriaValue
@@ -124,10 +124,10 @@ public class DeleteByCondition {
                         break;
                 }
             }
-            try (FileOutputStream fos = new FileOutputStream(outputFilePath)) {
+            try (FileOutputStream fos = new FileOutputStream(inputFilePath)) {
                 workbook.write(fos);
             }
-            return new StringValue("Output Saved as: " + outputFilePath);
+            return new StringValue("Output Saved as: " + inputFilePath);
         } catch (IOException e) {
             throw new BotCommandException("File processing error: " + e.getMessage());
         }
