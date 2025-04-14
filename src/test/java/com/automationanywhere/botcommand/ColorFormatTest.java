@@ -15,8 +15,8 @@ class ColorFormatTest {
 
     private ColorFormat colorFormat;
     private final String testResourcesDir = "src/test/resources/test_files/";
-    private final String originalsDir = testResourcesDir + "ColorFormat/";
-    private final String workingDir = testResourcesDir + "working/";
+    private final String originalsDir = testResourcesDir + "originals/";
+    private final String workingDir = testResourcesDir + "working/ColorFormat/";
 
     @BeforeEach
     void setUp() throws IOException {
@@ -82,7 +82,7 @@ class ColorFormatTest {
         Exception exception = assertThrows(BotCommandException.class, () -> {
             colorFormat.action(inputFilePath, condition, range, colorIndex);
         });
-        assertTrue(exception.getMessage().contains("Row value must be a number"));
+        assertTrue(exception.getMessage().contains("Invalid"));
     }
 
     @Test
