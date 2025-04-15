@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class ConvertExcelTest {
 
     private ConvertExcel convertExcel;
+    private final String testResourcesDir = "src/test/resources/test_files/";
+    private final String originalsDir = testResourcesDir + "original/";
+    private final String workingDir = testResourcesDir + "working/ConvertExcel/";
 
     @BeforeEach
     void setUp() {
@@ -19,52 +22,63 @@ class ConvertExcelTest {
 
     @Test
     void testXLSXtoCSVConversion() {
-        String inputFilePath = "src/test/resources/test_files/original/valid-test-input.xlsx";
-        String outputFilePath = "src/test/resources/test_files/ConvertExcel/xlsxToCsvOutput.csv";
+        String inputFilePath = workingDir+"valid-xlsx-test-input.xlsx";
+        String outputFilePath = workingDir+"valid-xlsx-test-input.csv";
         String conversionType = "XLSXtoCSV";
-
-        assertDoesNotThrow(() -> convertExcel.action(inputFilePath, outputFilePath, conversionType));
-        assertTrue(new File(outputFilePath.replace(".csv", "0.csv")).exists());
+        assertDoesNotThrow(() -> {
+            String result = convertExcel.action(inputFilePath, conversionType).get();
+            assertTrue(result.contains(inputFilePath));
+        });
+        assertTrue(new File(outputFilePath).exists());
     }
 
     @Test
     void testXLStoCSVConversion() {
-        String inputFilePath = "src/test/resources/test_files/original/valid-test-input.xls";
-        String outputFilePath = "src/test/resources/test_files/ConvertExcel/xlsToCsvOutput.csv";
+        String inputFilePath = workingDir+"valid-xls-test-input.xls";
+        String outputFilePath = workingDir+"valid-xls-test-input.csv";
         String conversionType = "XLStoCSV";
 
-        assertDoesNotThrow(() -> convertExcel.action(inputFilePath, outputFilePath, conversionType));
-        assertTrue(new File(outputFilePath.replace(".csv", "0.csv")).exists());
+        assertDoesNotThrow(() -> {
+            String result = convertExcel.action(inputFilePath, conversionType).get();
+            assertTrue(result.contains(inputFilePath));
+        });
+        assertTrue(new File(outputFilePath).exists());
     }
 
     @Test
     void testXLStoXLSXConversion() {
-        String inputFilePath = "src/test/resources/test_files/original/valid-test-input.xls";
-        String outputFilePath = "src/test/resources/test_files/ConvertExcel/xlsToXlsxOutput.xlsx";
+        String inputFilePath = workingDir+"valid-xls-test-input 1.xls";
+        String outputFilePath = workingDir+"valid-xls-test-input 1.xlsx";
         String conversionType = "XLStoXLSX";
 
-        assertDoesNotThrow(() -> convertExcel.action(inputFilePath, outputFilePath, conversionType));
+        assertDoesNotThrow(() -> {
+            String result = convertExcel.action(inputFilePath, conversionType).get();
+            assertTrue(result.contains(inputFilePath));
+        });
         assertTrue(new File(outputFilePath).exists());
     }
 
     @Test
     void testCSVtoXLSXConversion() {
-        String inputFilePath = "src/test/resources/test_files/original/valid-test-input.csv";
-        String outputFilePath = "src/test/resources/test_files/ConvertExcel/csvToXlsxOutput.xlsx";
+        String inputFilePath = workingDir+"valid-csv-test-input.csv";
+        String outputFilePath = workingDir+"valid-csv-test-input.xlsx";
         String conversionType = "CSVtoXLSX";
 
-        assertDoesNotThrow(() -> convertExcel.action(inputFilePath, outputFilePath, conversionType));
+        assertDoesNotThrow(() -> {
+            String result = convertExcel.action(inputFilePath, conversionType).get();
+            assertTrue(result.contains(inputFilePath));
+        });
         assertTrue(new File(outputFilePath).exists());
     }
 
     @Test
     void testFileNotFound() {
-        String inputFilePath = "src/test/resources/test_files/non_existent_file.xlsx";
-        String outputFilePath = "src/test/resources/test_files/ConvertExcel/noOutput.xlsx";
+        String inputFilePath = workingDir+"non_existent_file.xlsx";
+        String outputFilePath = workingDir+"valid-test-input.xlsx";
         String conversionType = "XLSXtoCSV";
 
         Exception exception = assertThrows(BotCommandException.class, () -> {
-            convertExcel.action(inputFilePath, outputFilePath, conversionType);
+            convertExcel.action(inputFilePath, conversionType);
         });
 
         assertTrue(exception.getMessage().contains("File processing error"));

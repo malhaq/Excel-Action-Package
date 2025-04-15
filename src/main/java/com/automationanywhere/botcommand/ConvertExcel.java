@@ -48,16 +48,16 @@ public class ConvertExcel {
             String inputFilePath,
 
 
-            @Idx(index = "2", type = TEXT)
-            @Pkg(label = "Output File", description = "Path where the converted file will be saved.")
-            @NotEmpty
-            String outputFilePath,
+//            @Idx(index = "2", type = TEXT)
+//            @Pkg(label = "Output File", description = "Path where the converted file will be saved.")
+//            @NotEmpty
+//            String outputFilePath,
 
-            @Idx(index = "3", type = SELECT, options = {
-                    @Idx.Option(index = "3.1", pkg = @Pkg(label = "Excel (.xls) to Excel (.xlsx)", value = "XLStoXLSX")),
-                    @Idx.Option(index = "3.2", pkg = @Pkg(label = "Excel (.xlsx) to CSV", value = "XLSXtoCSV")),
-                    @Idx.Option(index = "3.3", pkg = @Pkg(label = "Excel (.xls) to CSV",  value = "XLStoCSV")),
-                    @Idx.Option(index = "3.4", pkg = @Pkg(label = "CSV to Excel (.xlsx)", value = "CSVtoXLSX"))
+            @Idx(index = "2", type = SELECT, options = {
+                    @Idx.Option(index = "2.1", pkg = @Pkg(label = "Excel (.xls) to Excel (.xlsx)", value = "XLStoXLSX")),
+                    @Idx.Option(index = "2.2", pkg = @Pkg(label = "Excel (.xlsx) to CSV", value = "XLSXtoCSV")),
+                    @Idx.Option(index = "2.3", pkg = @Pkg(label = "Excel (.xls) to CSV",  value = "XLStoCSV")),
+                    @Idx.Option(index = "2.4", pkg = @Pkg(label = "CSV to Excel (.xlsx)", value = "CSVtoXLSX"))
 
             })
             @Pkg(label = "Conversion Type", description = "Select the type of conversion to perform.")
@@ -75,20 +75,20 @@ public class ConvertExcel {
 
             switch (conversionType) {
                 case "XLSXtoCSV":
-                    ExcelUtils.convertXlsxToCsv(inputFilePath, outputFilePath);
+                    ExcelUtils.convertXlsxToCsv(inputFilePath);
                     break;
                 case "XLStoCSV":
-                    ExcelUtils.convertXlsToCsv(inputFilePath, outputFilePath);
+                    ExcelUtils.convertXlsToCsv(inputFilePath);
                     break;
                 case "XLStoXLSX":
-                    ExcelUtils.convertXlsToXlsx(inputFilePath, outputFilePath);
+                    ExcelUtils.convertXlsToXlsx(inputFilePath);
                     break;
                 case "CSVtoXLSX":
-                    ExcelUtils.convertCsvToXlsx(inputFilePath, outputFilePath);
+                    ExcelUtils.convertCsvToXlsx(inputFilePath);
                     break;
 
             }
-            return new StringValue("Output Saved as: " + outputFilePath);
+            return new StringValue("Original file successfully converted and overwritten.");
         } catch (IOException e) {
             throw new BotCommandException("File processing error: " + e.getMessage());
         }

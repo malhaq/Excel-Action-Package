@@ -76,10 +76,9 @@ public class ExcelUtils {
      * convert excel file from xls to xlsx
      *
      * @param inputFilePath
-     * @param outputFilePath
      * @throws IOException
      */
-    public static void convertXlsToXlsx(String inputFilePath, String outputFilePath) throws IOException {
+    public static void convertXlsToXlsx(String inputFilePath) throws IOException {
         FileInputStream fis = new FileInputStream(new File(inputFilePath));
         Workbook workbook = new HSSFWorkbook(fis);
         Workbook newWorkBook = new XSSFWorkbook();
@@ -113,12 +112,19 @@ public class ExcelUtils {
                 }
             }
         }
+        String xlsxPath = inputFilePath.replaceAll("\\.[^.]+$", "") + ".xlsx";
+        File old = new File(inputFilePath);
+        File newFile = new File(xlsxPath);
+        if (old.renameTo(newFile)) {
+            FileOutputStream fos = new FileOutputStream(newFile);
+            newWorkBook.write(fos);
+            fos.close();
+            workbook.close();
+            newWorkBook.close();
+        } else {
+            throw new BotCommandException("File conversion failed");
+        }
 
-        FileOutputStream fos = new FileOutputStream(new File(ensureCorrectExtension(outputFilePath,".xlsx")));
-        newWorkBook.write(fos);
-        fos.close();
-        workbook.close();
-        newWorkBook.close();
 
     }
 
@@ -126,26 +132,24 @@ public class ExcelUtils {
      * convert excel file from xlsx to csv
      *
      * @param inputFilePath
-     * @param outputFilePath
      * @throws IOException
      */
-    public static void convertXlsxToCsv(String inputFilePath, String outputFilePath) throws IOException {
+    public static void convertXlsxToCsv(String inputFilePath) throws IOException {
         FileInputStream fis = new FileInputStream(new File(inputFilePath));
         Workbook workbook = new XSSFWorkbook(fis);
-        convertLogic(outputFilePath, workbook);
+        convertLogic(inputFilePath, workbook);
 
     }
 
-    private static void convertLogic(String outputFilePath, Workbook workbook) throws IOException {
+    private static void convertLogic(String inputFilePath, Workbook workbook) throws IOException {
         FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
-        for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
-            Sheet inputSheet = workbook.getSheetAt(i);
-            String sheetName = inputSheet.getSheetName();
-            String csvpath = outputFilePath.replaceAll("\\.[^.]+$", "") + i + ".csv";
-
-            FileWriter fw = new FileWriter(csvpath);
-
+        Sheet inputSheet = workbook.getSheetAt(0);
+        String csvpath = inputFilePath.replaceAll("\\.[^.]+$", "") +".csv";
+        File old = new File(inputFilePath);
+        File newFile = new File(csvpath);
+        if (old.renameTo(newFile)) {
+            FileWriter fw = new FileWriter(newFile);
             for (Row row : inputSheet) {
                 StringBuilder sb = new StringBuilder();
                 for (Cell cell : row) {
@@ -183,33 +187,34 @@ public class ExcelUtils {
                 fw.write(sb.toString().replaceAll(",$", "") + "\n");
             }
             fw.close();
+
+            workbook.close();
+        } else {
+            throw new BotCommandException("File conversion failed");
         }
-        workbook.close();
     }
 
     /**
      * convert excel file from xls to csv
      *
      * @param inputFilePath
-     * @param outputFilePath
      * @throws IOException
      */
-    public static void convertXlsToCsv(String inputFilePath, String outputFilePath) throws IOException {
+    public static void convertXlsToCsv(String inputFilePath) throws IOException {
 
         FileInputStream fis = new FileInputStream(new File(inputFilePath));
         Workbook workbook = new HSSFWorkbook(fis);
-        convertLogic(outputFilePath, workbook);
+        convertLogic(inputFilePath, workbook);
     }
 
     /**
      * convert excel file from csv to xlsx
      *
      * @param inputFilePath
-     * @param outputFilePath
      * @throws IOException
      */
 
-    public static void convertCsvToXlsx(String inputFilePath, String outputFilePath) throws IOException {
+    public static void convertCsvToXlsx(String inputFilePath) throws IOException {
 
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Sheet1"); // Create a single sheet named "Sheet1"
@@ -227,11 +232,17 @@ public class ExcelUtils {
             }
         }
         br.close();
-
-        FileOutputStream fos = new FileOutputStream(outputFilePath);
-        workbook.write(fos);
-        fos.close();
-        workbook.close();
+        String xlsxPath = inputFilePath.replaceAll("\\.[^.]+$", "") + ".xlsx";
+        File old = new File(inputFilePath);
+        File newFile = new File(xlsxPath);
+        if (old.renameTo(newFile)) {
+            FileOutputStream fos = new FileOutputStream(newFile);
+            workbook.write(fos);
+            fos.close();
+            workbook.close();
+        } else {
+            throw new BotCommandException("File conversion failed");
+        }
 
     }
 
