@@ -5,6 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,8 +20,28 @@ class ConvertExcelTest {
     private final String workingDir = testResourcesDir + "working/ConvertExcel/";
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         convertExcel = new ConvertExcel();
+
+        new File(workingDir).mkdirs();
+
+        // Clean working directory
+        File[] workingFiles = new File(workingDir).listFiles();
+        if (workingFiles != null) {
+            for (File file : workingFiles) {
+                file.delete();
+            }
+        }
+
+        // Copy original test files to working directory
+        File[] originalFiles = new File(originalsDir).listFiles();
+        if (originalFiles != null) {
+            for (File original : originalFiles) {
+                Path source = original.toPath();
+                Path target = new File(workingDir + original.getName()).toPath();
+                Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+            }
+        }
     }
 
     @Test
@@ -35,7 +59,7 @@ class ConvertExcelTest {
     @Test
     void testXLStoCSVConversion() {
         String inputFilePath = workingDir+"valid-xls-test-input.xls";
-        String outputFilePath = workingDir+"valid-xlschan-test-input.csv";
+        String outputFilePath = workingDir+"valid-xls-test-input.csv";
         String conversionType = "XLStoCSV";
 
         assertDoesNotThrow(() -> {
