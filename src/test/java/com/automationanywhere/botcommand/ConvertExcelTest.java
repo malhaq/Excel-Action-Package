@@ -35,7 +35,7 @@ class ConvertExcelTest {
     @Test
     void testXLStoCSVConversion() {
         String inputFilePath = workingDir+"valid-xls-test-input.xls";
-        String outputFilePath = workingDir+"valid-xls-test-input.csv";
+        String outputFilePath = workingDir+"valid-xlschan-test-input.csv";
         String conversionType = "XLStoCSV";
 
         assertDoesNotThrow(() -> {
