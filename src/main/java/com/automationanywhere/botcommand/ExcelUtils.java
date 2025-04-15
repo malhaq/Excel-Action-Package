@@ -145,50 +145,53 @@ public class ExcelUtils {
         FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
         Sheet inputSheet = workbook.getSheetAt(0);
-        String csvpath = inputFilePath.replaceAll("\\.[^.]+$", "") +".csv";
+        String csvpath = inputFilePath.replaceAll("\\.[^.]+$", "") + ".csv";
         File old = new File(inputFilePath);
         File newFile = new File(csvpath);
+
+        StringBuilder allData = new StringBuilder();
+        for (Row row : inputSheet) {
+            StringBuilder sb = new StringBuilder();
+            for (Cell cell : row) {
+                switch (cell.getCellType()) {
+                    case STRING:
+                        sb.append(cell.getStringCellValue());
+                        break;
+                    case NUMERIC:
+                        sb.append(cell.getNumericCellValue());
+                        break;
+                    case BOOLEAN:
+                        sb.append(cell.getBooleanCellValue());
+                        break;
+                    case FORMULA:
+                        CellValue cellValue = evaluator.evaluate(cell);
+                        switch (cellValue.getCellType()) {
+                            case STRING:
+                                sb.append(cellValue.getStringValue());
+                                break;
+                            case NUMERIC:
+                                sb.append(cellValue.getNumberValue());
+                                break;
+                            case BOOLEAN:
+                                sb.append(cellValue.getBooleanValue());
+                                break;
+                            default:
+                                sb.append("");
+                        }
+                        break;
+                    default:
+                        sb.append("");
+                }
+                sb.append(",");
+            }
+            allData.append(sb.toString().replaceAll(",$", "")).append("\n");
+
+        }
+        workbook.close();
         if (old.renameTo(newFile)) {
             FileWriter fw = new FileWriter(newFile);
-            for (Row row : inputSheet) {
-                StringBuilder sb = new StringBuilder();
-                for (Cell cell : row) {
-                    switch (cell.getCellType()) {
-                        case STRING:
-                            sb.append(cell.getStringCellValue());
-                            break;
-                        case NUMERIC:
-                            sb.append(cell.getNumericCellValue());
-                            break;
-                        case BOOLEAN:
-                            sb.append(cell.getBooleanCellValue());
-                            break;
-                        case FORMULA:
-                            CellValue cellValue = evaluator.evaluate(cell);
-                            switch (cellValue.getCellType()) {
-                                case STRING:
-                                    sb.append(cellValue.getStringValue());
-                                    break;
-                                case NUMERIC:
-                                    sb.append(cellValue.getNumberValue());
-                                    break;
-                                case BOOLEAN:
-                                    sb.append(cellValue.getBooleanValue());
-                                    break;
-                                default:
-                                    sb.append("");
-                            }
-                            break;
-                        default:
-                            sb.append("");
-                    }
-                    sb.append(",");
-                }
-                fw.write(sb.toString().replaceAll(",$", "") + "\n");
-            }
+            fw.write(allData.toString());
             fw.close();
-
-            workbook.close();
         } else {
             throw new BotCommandException("File conversion failed");
         }

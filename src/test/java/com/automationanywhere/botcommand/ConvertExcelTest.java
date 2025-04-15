@@ -51,7 +51,7 @@ class ConvertExcelTest {
         String conversionType = "XLSXtoCSV";
         assertDoesNotThrow(() -> {
             String result = convertExcel.action(inputFilePath, conversionType).get();
-            assertTrue(result.contains(inputFilePath));
+            assertTrue(result.contains("Original file successfully converted and overwritten."));
         });
         assertTrue(new File(outputFilePath).exists());
     }
@@ -64,7 +64,7 @@ class ConvertExcelTest {
 
         assertDoesNotThrow(() -> {
             String result = convertExcel.action(inputFilePath, conversionType).get();
-            assertTrue(result.contains(inputFilePath));
+            assertTrue(result.contains("Original file successfully converted and overwritten."));
         });
         assertTrue(new File(outputFilePath).exists());
     }
@@ -77,7 +77,7 @@ class ConvertExcelTest {
 
         assertDoesNotThrow(() -> {
             String result = convertExcel.action(inputFilePath, conversionType).get();
-            assertTrue(result.contains(inputFilePath));
+            assertTrue(result.contains("Original file successfully converted and overwritten."));
         });
         assertTrue(new File(outputFilePath).exists());
     }
@@ -90,7 +90,7 @@ class ConvertExcelTest {
 
         assertDoesNotThrow(() -> {
             String result = convertExcel.action(inputFilePath, conversionType).get();
-            assertTrue(result.contains(inputFilePath));
+            assertTrue(result.contains("Original file successfully converted and overwritten."));
         });
         assertTrue(new File(outputFilePath).exists());
     }
