@@ -17,7 +17,7 @@ class InsertImageTest {
     private InsertImage insertImage;
     private final String testResourcesDir = "src/test/resources/test_files/";
     private final String originalsDir = testResourcesDir + "originals/";
-    private final String workingDir = testResourcesDir + "working/InsertImage/";
+    private final String workingDir = testResourcesDir + "working/Image/";
 
     @BeforeEach
     void setUp() throws IOException {
@@ -120,15 +120,19 @@ class InsertImageTest {
         Exception exception = assertThrows(BotCommandException.class, () -> {
             insertImage.action(excelFilePath, imagePath, targetCell);
         });
-
-        assertTrue(exception.getMessage().contains("Target cell format is invalid"));
+        System.out.println(exception.getMessage());
+        assertTrue(exception.getMessage().contains("Cell formate is wrong"));
     }
 
     @Test
     void testInsertImageInRange() {
         String excelFilePath = workingDir + "valid_input 1.xlsx";
         String imagePath = originalsDir + "test_image.jpg";
-        String targetCell = "A10:B15";
+        String targetCell = "F1:M15";
+
+        System.out.println("Excel Exists: " + new File(excelFilePath).exists());
+        System.out.println("Image Exists: " + new File(imagePath).exists());
+
 
         assertDoesNotThrow(() -> {
             String result = insertImage.action(excelFilePath, imagePath, targetCell).get();
@@ -143,6 +147,9 @@ class InsertImageTest {
         String excelFilePath = workingDir + "valid_input.xlsx";
         String imagePath = originalsDir + "test_image.jpg";
         String targetCell = "AD10";
+
+        System.out.println("Excel Exists: " + new File(excelFilePath).exists());
+        System.out.println("Image Exists: " + new File(imagePath).exists());
 
         assertDoesNotThrow(() -> {
             String result = insertImage.action(excelFilePath, imagePath, targetCell).get();

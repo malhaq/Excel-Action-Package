@@ -11,10 +11,8 @@ import com.automationanywhere.commandsdk.annotations.rules.NotEmpty;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
-import org.apache.poi.xssf.usermodel.XSSFDrawing;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
+
 
 
 import javax.imageio.ImageIO;
@@ -140,7 +138,11 @@ public class InsertImage {
 
             // Read image into byte array
             byte[] bytes = IOUtils.toByteArray(imageInputStream);
-            int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
+            int pictureType = Workbook.PICTURE_TYPE_PNG;
+            if (imagePath.toLowerCase().endsWith(".jpg") || imagePath.toLowerCase().endsWith(".jpeg")) {
+                pictureType = Workbook.PICTURE_TYPE_JPEG;
+            }
+            int pictureIdx = workbook.addPicture(bytes, pictureType);
 
             // Create drawing and anchor
             XSSFDrawing drawing = sheet.createDrawingPatriarch();
@@ -152,13 +154,8 @@ public class InsertImage {
 
             drawing.createPicture(anchor, pictureIdx);
 
-            File imageFile = new File(imagePath);
-            BufferedImage img = ImageIO.read(imageFile);
-
             try (FileOutputStream fos = new FileOutputStream(inputFilePath)) {
                 workbook.write(fos);
-                fos.close();
-                workbook.close();
             }
 
             return new StringValue("Conversion completed. Saved as: " + inputFilePath);
