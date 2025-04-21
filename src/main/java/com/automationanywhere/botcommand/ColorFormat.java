@@ -184,7 +184,7 @@ public class ColorFormat {
                     }
                 } else {
                     if (array[0].matches(".*\\d.*")) {
-                        int digitIndx = firstDigitIndex(array[0]);
+                        int digitIndx = ExcelUtils.firstDigitIndex(array[0]);
                         System.out.println(array[0].substring(0, digitIndx));
                         System.out.println(array[0].substring(digitIndx).trim());
                         String columnLetter = (array[0] != null) ? array[0].substring(0, digitIndx) : null;
@@ -195,7 +195,7 @@ public class ColorFormat {
                         startColumn = ExcelUtils.columnLetterToIndex(array[0]);
                     }
                     if (array[1].matches(".*\\d.*")) {
-                        int digitIndx = firstDigitIndex(array[1]);
+                        int digitIndx = ExcelUtils.firstDigitIndex(array[1]);
 //                        String columnLetter = (array[0] != null) ? array[1].substring(0, digitIndx) : null;
                         endColumn = ExcelUtils.columnLetterToIndex(array[1].substring(0, digitIndx));
                         endRow = Integer.parseInt(array[1].substring(digitIndx).trim())-1;
