@@ -125,10 +125,10 @@ class InsertImageTest {
     }
 
     @Test
-    void testInsertImageInEdgeCell() {
-        String excelFilePath = workingDir + "valid_input1.xlsx";
+    void testInsertImageInRange() {
+        String excelFilePath = workingDir + "valid_input 1.xlsx";
         String imagePath = originalsDir + "test_image.jpg";
-        String targetCell = "AA10"; // Edge case, double-letter column
+        String targetCell = "A10:B15";
 
         assertDoesNotThrow(() -> {
             String result = insertImage.action(excelFilePath, imagePath, targetCell).get();
@@ -142,7 +142,7 @@ class InsertImageTest {
     void testInsertImageInCell() {
         String excelFilePath = workingDir + "valid_input.xlsx";
         String imagePath = originalsDir + "test_image.jpg";
-        String targetCell = "AD10"; // Edge case, double-letter column
+        String targetCell = "AD10";
 
         assertDoesNotThrow(() -> {
             String result = insertImage.action(excelFilePath, imagePath, targetCell).get();

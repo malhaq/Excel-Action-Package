@@ -55,9 +55,9 @@ public class InsertImage {
 
             @Idx(index = "3", type = TEXT)
             @Pkg(
-                    label = "Target Cell",//A5,B11,AB6
-                    description = "Enter the cell location to insert the image, e.g., A1, B5, AB6.",
-                    node_label = "Cell to insert the image into"
+                    label = "Target Cell Range",//A5,B11,AB6
+                    description = "Enter the cell location to insert the image, e.g., A1, AB6, A1:D10.",
+                    node_label = "Cell Range to insert the image into"
             )
             @NotEmpty
             String cell
@@ -98,12 +98,12 @@ public class InsertImage {
         if (cell == null || cell.trim().isEmpty()) {
             throw new BotCommandException("Target cell cannot be empty.");
         }
-        if (!cell.matches("^[A-Za-z]+[0-9]+$")) {
-            throw new BotCommandException("Target cell format is invalid. Example: A1, B5, AB6");
-        }
+//        if (!cell.matches("^[A-Za-z]+[0-9]+$")) {
+//            throw new BotCommandException("Target cell format is invalid. Example: A1, B5, AB6");
+//        }
 
 
-        int targetColumn, targetRow;
+        int startColumn, startRow, endColumn, endRow;
 
         try (FileInputStream fis = new FileInputStream(inputFilePath);
              XSSFWorkbook workbook = new XSSFWorkbook(fis);
@@ -112,11 +112,26 @@ public class InsertImage {
             if (!imagePath.toLowerCase().matches(".*\\.(jpg|jpeg|png|bmp|gif)$")) {
                 throw new RuntimeException("Unsupported file type. Please upload a valid image.");
             }
-            if (cell.matches(".*\\d.*")) {
-                int digitIndx = ExcelUtils.firstDigitIndex(cell);
-                targetColumn = ExcelUtils.columnLetterToIndex(cell.substring(0, digitIndx));
-                targetRow = Integer.parseInt(cell.substring(digitIndx).trim()) - 1;
+            if (validateCellOrRange(cell)) {
+                if(cell.contains(":")){
+                    String [] array = cell.split(":");
+
+                    int digitIndx = ExcelUtils.firstDigitIndex(array[0]);
+                    startColumn = ExcelUtils.columnLetterToIndex(array[0].substring(0, digitIndx));
+                    startRow = Integer.parseInt(array[0].substring(digitIndx).trim()) - 1;
+
+                    digitIndx = ExcelUtils.firstDigitIndex(array[1]);
+                    endColumn = ExcelUtils.columnLetterToIndex(array[1].substring(0, digitIndx));
+                    endRow = Integer.parseInt(array[1].substring(digitIndx).trim()) - 1;
+                }else {
+                    int digitIndx = ExcelUtils.firstDigitIndex(cell);
+                    startColumn = ExcelUtils.columnLetterToIndex(cell.substring(0, digitIndx));
+                    startRow = Integer.parseInt(cell.substring(digitIndx).trim()) - 1;
+                    endColumn = startColumn+1;
+                    endRow = startRow+1;
+                }
             } else {
+                String [] array = cell.split(":");
                 throw new RuntimeException("Cell formate is wrong");
             }
 
@@ -130,10 +145,10 @@ public class InsertImage {
             // Create drawing and anchor
             XSSFDrawing drawing = sheet.createDrawingPatriarch();
             XSSFClientAnchor anchor = new XSSFClientAnchor();
-            anchor.setCol1(targetColumn); // Column start
-            anchor.setRow1(targetRow); // Row start
-            anchor.setCol2(targetColumn + 1); // Column end (optional: size)
-            anchor.setRow2(targetRow + 1); // Row end (optional: size)
+            anchor.setCol1(startColumn); // Column start
+            anchor.setRow1(startRow); // Row start
+            anchor.setCol2(endColumn + 1); // Column end (optional: size)
+            anchor.setRow2(endRow + 1); // Row end (optional: size)
 
             drawing.createPicture(anchor, pictureIdx);
 
@@ -150,6 +165,15 @@ public class InsertImage {
         } catch (Exception e) {
             throw new BotCommandException("File processing error: " + e.getMessage());
         }
+    }
+    private boolean validateCellOrRange(String input) {
+        String singleCellPattern = "^[A-Z]+[1-9][0-9]*$";
+        String rangePattern = "^[A-Z]+[1-9][0-9]*:[A-Z]+[1-9][0-9]*$";
+
+        if (!input.matches(singleCellPattern) && !input.matches(rangePattern)) {
+            return false;
+        }
+        return true;
     }
 
 }

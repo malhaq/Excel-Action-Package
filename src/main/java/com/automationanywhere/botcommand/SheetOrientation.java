@@ -40,8 +40,8 @@ public class SheetOrientation {
             String inputFilePath,
 
             @Idx(index = "2", type = SELECT, options = {
-                    @Idx.Option(index = "2.1",pkg = @Pkg(label = "Convert to Land Scape", value = "ToLandScape")),
-                    @Idx.Option(index = "2.2",pkg = @Pkg(label = "Convert to Land Portrait", value = "ToPortrait"))
+                    @Idx.Option(index = "2.1",pkg = @Pkg(label = "Convert to Land Scape", value = "LandScape")),
+                    @Idx.Option(index = "2.2",pkg = @Pkg(label = "Convert to Land Portrait", value = "Portrait"))
             })
             @Pkg(label = "Sheet Orientation")
             @NotEmpty
