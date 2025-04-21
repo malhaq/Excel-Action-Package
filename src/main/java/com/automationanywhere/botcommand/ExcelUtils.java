@@ -249,10 +249,14 @@ public class ExcelUtils {
 
     }
 
-    public static String ensureCorrectExtension(String filename, String extension) {
-        return filename.replaceAll("\\.[^.]+$", "") + extension;
+    public static int firstDigitIndex(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (Character.isDigit(str.charAt(i))) {
+                return i; // Return the index of the first digit
+            }
+        }
+        return -1; // Return -1 if no digit is found
     }
-
 }
 
 

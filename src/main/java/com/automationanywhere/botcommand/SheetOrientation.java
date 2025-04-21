@@ -7,13 +7,11 @@ import com.automationanywhere.commandsdk.annotations.Idx;
 import com.automationanywhere.commandsdk.annotations.*;
 import com.automationanywhere.commandsdk.annotations.BotCommand;
 import com.automationanywhere.commandsdk.annotations.rules.NotEmpty;
-import com.automationanywhere.commandsdk.i18n.Messages;
-import com.automationanywhere.commandsdk.i18n.MessagesFactory;
+
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 import java.io.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.automationanywhere.commandsdk.model.AttributeType.*;
@@ -31,7 +29,7 @@ import static com.automationanywhere.commandsdk.model.DataType.STRING;
         return_label = "Updated File Path", return_type = STRING, return_required = true)
 
 public class SheetOrientation {
-    private static final Logger LOGGER = Logger.getLogger(ColumnConverter.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SheetOrientation.class.getName());
 
     //Identify the entry point for the action. Returns a Value<String> because the return type is String.
     @Execute
@@ -72,17 +70,16 @@ public class SheetOrientation {
                     @Idx.Option(index = "3.20", pkg = @Pkg(label = "ENVELOPE_9", value = "19")),
                     @Idx.Option(index = "3.21", pkg = @Pkg(label = "ENVELOPE_10", value = "20")),
                     @Idx.Option(index = "3.22", pkg = @Pkg(label = "ENVELOPE_DL", value = "27")),
-                    @Idx.Option(index = "3.23", pkg = @Pkg(label = "ENVELOPE_CS", value = "28")),
-                    @Idx.Option(index = "3.24", pkg = @Pkg(label = "ENVELOPE_C5", value = "28")),
-                    @Idx.Option(index = "3.25", pkg = @Pkg(label = "ENVELOPE_C3", value = "29")),
-                    @Idx.Option(index = "3.26", pkg = @Pkg(label = "ENVELOPE_C4", value = "30")),
-                    @Idx.Option(index = "3.27", pkg = @Pkg(label = "ENVELOPE_C6", value = "31")),
-                    @Idx.Option(index = "3.28", pkg = @Pkg(label = "ENVELOPE_MONARCH", value = "37")),
-                    @Idx.Option(index = "3.29", pkg = @Pkg(label = "A4_EXTRA", value = "53")),
-                    @Idx.Option(index = "3.30", pkg = @Pkg(label = "A4_TRANSVERSE", value = "55")),
-                    @Idx.Option(index = "3.31", pkg = @Pkg(label = "A4_PLUS", value = "60")),
-                    @Idx.Option(index = "3.32", pkg = @Pkg(label = "LETTER_ROTATED", value = "75")),
-                    @Idx.Option(index = "3.33", pkg = @Pkg(label = "A4_ROTATED", value = "77"))
+                    @Idx.Option(index = "3.23", pkg = @Pkg(label = "ENVELOPE_C5", value = "28")),
+                    @Idx.Option(index = "3.24", pkg = @Pkg(label = "ENVELOPE_C3", value = "29")),
+                    @Idx.Option(index = "3.25", pkg = @Pkg(label = "ENVELOPE_C4", value = "30")),
+                    @Idx.Option(index = "3.26", pkg = @Pkg(label = "ENVELOPE_C6", value = "31")),
+                    @Idx.Option(index = "3.27", pkg = @Pkg(label = "ENVELOPE_MONARCH", value = "37")),
+                    @Idx.Option(index = "3.28", pkg = @Pkg(label = "A4_EXTRA", value = "53")),
+                    @Idx.Option(index = "3.39", pkg = @Pkg(label = "A4_TRANSVERSE", value = "55")),
+                    @Idx.Option(index = "3.30", pkg = @Pkg(label = "A4_PLUS", value = "60")),
+                    @Idx.Option(index = "3.31", pkg = @Pkg(label = "LETTER_ROTATED", value = "75")),
+                    @Idx.Option(index = "3.32", pkg = @Pkg(label = "A4_ROTATED", value = "77"))
 
 
             })

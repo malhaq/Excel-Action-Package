@@ -142,7 +142,7 @@ public class ColorFormat {
             if (single) {
                 if (Condition.equals( "Column")) {
                     if (range.matches(".*\\d.*")) {
-                        int digitIndx = firstDigitIndex(range);
+                        int digitIndx = ExcelUtils.firstDigitIndex(range);
                         startColumn = ExcelUtils.columnLetterToIndex(range.substring(0, digitIndx));
                         startRow = Integer.parseInt(range.substring(digitIndx).trim())-1;
                     }else {
@@ -221,12 +221,5 @@ public class ColorFormat {
         }
     }
 
-    private static int firstDigitIndex(String str) {
-        for (int i = 0; i < str.length(); i++) {
-            if (Character.isDigit(str.charAt(i))) {
-                return i; // Return the index of the first digit
-            }
-        }
-        return -1; // Return -1 if no digit is found
-    }
+
 }
