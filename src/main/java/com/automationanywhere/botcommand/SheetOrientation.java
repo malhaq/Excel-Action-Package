@@ -23,7 +23,7 @@ import static com.automationanywhere.commandsdk.model.DataType.STRING;
 //CommandPks adds required information to be dispalable on GUI.
 @CommandPkg(
         //Unique name inside a package and label to display.
-        name = "SheetOrientation", label = "Change Sheet Orientation", node_label = "Change Orientation of a Sheet", description = "Converts the orientation of the first sheet in an Excel file to landscape or portrait and sets the page size.", icon = "excel_icon.svg",
+        name = "SheetOrientation", label = "Change Sheet Orientation", description = "Converts the orientation of the first sheet in an Excel file to landscape or portrait and sets the page size.", icon = "excel_icon.svg",
 
         //Return type information. return_type ensures only the right kind of variable is provided on the UI.
         return_label = "Updated File Path", return_type = STRING, return_required = true)
