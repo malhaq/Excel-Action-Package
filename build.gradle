@@ -44,7 +44,7 @@ configure(allprojects){
 	packageJson{
 		artifactName = project.name
 		group = "$groupName"
-		author = ""
+		author = "Mohammad Abed-Alhaq"
 		generatePackageWithDateTime = true
 	}
 
