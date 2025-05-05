@@ -17,6 +17,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.ParseException;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
@@ -36,7 +37,7 @@ import static com.automationanywhere.commandsdk.model.DataType.STRING;
         name = "RowSort", label = "Sort Excel Sheet rows", description = "Sort the data in an excel sheet according to one column in an ascending or descending order", icon = "excel_icon.svg",
 
         //Return type information. return_type ensures only the right kind of variable is provided on the UI.
-        return_label = "[[DeleteByCondition.return_label]]", return_type = STRING, return_required = true)
+        return_label = "Sorting Status", return_type = STRING, return_required = true)
 
 public class SortExcel {
 
@@ -86,7 +87,6 @@ public class SortExcel {
             return new StringValue("Excel File Sorted Successfully");
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new BotCommandException("Some thing wrong: " + e.getMessage());
         }
 
@@ -95,12 +95,11 @@ public class SortExcel {
     private void sortExcelFile(String inputFile, int targetColumn, String sortBy, boolean ascending, boolean headers) throws IOException {
         File file = new File(inputFile);
         File backupFile = createBackupFile(file);
-        File tempFile = File.createTempFile("excel_sort_temp", ".xlsx");
+        File tempFile = File.createTempFile("excel_date", ".xlsx");
 
         try (Workbook workbook = WorkbookFactory.create(file)) {
             Sheet sheet = workbook.getSheetAt(0);
 
-            // Validate sheet and column
             if (sheet.getPhysicalNumberOfRows() == 0) {
                 throw new BotCommandException("The sheet is empty");
             }
@@ -108,7 +107,6 @@ public class SortExcel {
                 throw new BotCommandException("Target column " + targetColumn + " doesn't exist in the sheet");
             }
 
-            // Collect rows and their data
             int startRow = headers ? 1 : 0;
             List<List<Object>> rowData = new ArrayList<>();
 
@@ -123,14 +121,13 @@ public class SortExcel {
                 }
             }
 
-            // Create and apply comparator
             Comparator<List<Object>> comparator = createComparator(targetColumn, sortBy);
             if (!ascending) {
                 comparator = comparator.reversed();
             }
             rowData.sort(comparator);
 
-            // Clear and rebuild sheet
+
             int lastRowNum = sheet.getLastRowNum();
             for (int i = startRow; i <= lastRowNum; i++) {
                 Row row = sheet.getRow(i);
@@ -139,7 +136,7 @@ public class SortExcel {
                 }
             }
 
-            // Rebuild rows with preserved formatting
+
             for (int i = 0; i < rowData.size(); i++) {
                 Row newRow = sheet.createRow(headers ? i + 1 : i);
                 List<Object> data = rowData.get(i);
@@ -149,15 +146,15 @@ public class SortExcel {
                 }
             }
 
-            // Write to temp file
+
             try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                 workbook.write(fos);
             }
 
-            // Replace original file
+
             Files.move(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
-            // Restore backup if error occurs
+
             try {
                 Files.move(backupFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException restoreEx) {
@@ -192,6 +189,7 @@ public class SortExcel {
                     }
                 }
                 else if (sortBy.equals("Date")) {
+                    System.out.println("hello");
                     Date date1 = convertToDate(val1);
                     Date date2 = convertToDate(val2);
                     if (date1 != null && date2 != null) {
@@ -199,7 +197,7 @@ public class SortExcel {
                     }
                 }
             } catch (Exception e) {
-                throw new RuntimeException("comparator creation Error");
+                throw new RuntimeException("comparator creation Error"+e.getMessage());
             }
 
 
@@ -241,11 +239,11 @@ public class SortExcel {
 
         if (sortBy.equals("Numeric")) {
             if (value instanceof Number) return 1;
-            if (convertToNumber(value) != null) return 1; // String that can be parsed as number
+            if (convertToNumber(value) != null) return 1;
             return 2;
         }else if (sortBy.equals("Date")) {
             if (value instanceof Date) return 1;
-            if (convertToDate(value) != null) return 1; // String that can be parsed as date
+            if (convertToDate(value) != null) return 1;
             return 2;
         }
 
@@ -268,23 +266,44 @@ public class SortExcel {
     }
 
     private Date convertToDate(Object value) {
+        System.out.println("HI");
+
         if (value == null) return null;
-        if (value instanceof Date) return (Date) value;
-        if (value instanceof String) {
+
+        if (value instanceof Date) {
+            return (Date) value;
+        } else if (value instanceof String) {
+            String str = ((String) value).trim();
+            if (str.isEmpty()) return null;
+
             String[] dateFormats = {
-                    "yyyy-MM-dd", "MM/dd/yyyy", "dd-MMM-yyyy",
-                    "yyyy/MM/dd", "dd.MM.yyyy", "MMM dd, yyyy",
-                    "yyyy-MM-dd HH:mm:ss", "MM/dd/yyyy HH:mm:ss"
+                    "yyyy-MM-dd",
+                    "MM/dd/yyyy",
+                    "dd/MM/yyyy",
+                    "yyyy/MM/dd",
+                    "dd-MM-yyyy",
+                    "MM-dd-yyyy",
+                    "MMMM d, yyyy",
+                    "MMM dd, yyyy",
+                    "EEEE, MMM d"
             };
 
             for (String format : dateFormats) {
                 try {
-                    return new SimpleDateFormat(format).parse(value.toString().trim());
-                } catch (Exception e) {
-                    throw new RuntimeException("date conversion error");
+                    return new SimpleDateFormat(format).parse(str);
+                } catch (ParseException e) {
+                    throw new RuntimeException("Date format Error"+e.getMessage());
                 }
             }
+
+            // Final fallback: Java can sometimes parse ISO 8601-like strings
+            try {
+                return java.sql.Date.valueOf(str);
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Date format Error"+e.getMessage());
+            }
         }
+
         return null;
     }
 
@@ -314,7 +333,7 @@ public class SortExcel {
             cell.setCellValue((Date) value);
             CellStyle style = workbook.createCellStyle();
             CreationHelper createHelper = workbook.getCreationHelper();
-            style.setDataFormat(createHelper.createDataFormat().getFormat("m/d/yy h:mm"));
+            style.setDataFormat(createHelper.createDataFormat().getFormat("dd/mm/yy"));
             cell.setCellStyle(style);
         } else if (value instanceof Boolean) {
             cell.setCellValue((Boolean) value);
