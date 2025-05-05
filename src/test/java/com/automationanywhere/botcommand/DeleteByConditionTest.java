@@ -59,7 +59,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "Fathi";//7 grace
 
         assertDoesNotThrow(() -> {
-            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,false,null,null,null).get();
+            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,"",null,null,null).get();
             assertTrue(result.contains(inputFilePath));
         });
         assertTrue(new File(inputFilePath).exists());
@@ -76,7 +76,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "Fathi";//only one left
 
         assertDoesNotThrow(() -> {
-            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,false,null,null,null).get();
+            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,"",null,null,null).get();
             assertTrue(result.contains(inputFilePath));
         });
         assertTrue(new File(inputFilePath).exists());
@@ -91,7 +91,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "19.0";//7 grace
 
         assertDoesNotThrow(() -> {
-            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,false,null,null,null).get();
+            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,"",null,null,null).get();
             assertTrue(result.contains(inputFilePath));
         });
         assertTrue(new File(inputFilePath).exists());
@@ -106,7 +106,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "25";//only one left
 
         assertDoesNotThrow(() -> {
-            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,false,null,null,null).get();
+            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,"",null,null,null).get();
             assertTrue(result.contains(inputFilePath));
         });
         assertTrue(new File(inputFilePath).exists());
@@ -121,7 +121,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "5th";
 
         assertDoesNotThrow(() -> {
-            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,false,null,null,null).get();
+            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,"",null,null,null).get();
             assertTrue(result.contains(inputFilePath));
         });
         assertTrue(new File(inputFilePath).exists());
@@ -136,7 +136,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "th";
 
         assertDoesNotThrow(() -> {
-            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,false,null,null,null).get();
+            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,"",null,null,null).get();
             assertTrue(result.contains(inputFilePath));
         });
         assertTrue(new File(inputFilePath).exists());
@@ -163,7 +163,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "9";
 
         assertDoesNotThrow(() -> {
-            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,false,null,null,null).get();
+            String result = deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,"",null,null,null).get();
             assertTrue(result.contains(inputFilePath));
         });
         assertTrue(new File(inputFilePath).exists());
@@ -176,7 +176,7 @@ public class DeleteByConditionTest {
         String Condition = "Equals to =";
         String criteriaValue = "Fathi";
         Boolean addNewCondition = true;
-        Boolean logicalOperator = true; // OR operator
+        String logicalOperator = "OR"; // OR operator
         String column2 = "B";
         String Condition2 = "Equals to =";
         String criteriaValue2 = "25";
@@ -198,7 +198,7 @@ public class DeleteByConditionTest {
         String Condition = "Equals to =";
         String criteriaValue = "Fathi";
         Boolean addNewCondition = true;
-        Boolean logicalOperator = false; // AND operator
+        String logicalOperator = "AND"; // AND operator
         String column2 = "B";
         String Condition2 = "Equals to =";
         String criteriaValue2 = "25";
@@ -222,7 +222,7 @@ public class DeleteByConditionTest {
 
 
         Exception exception = assertThrows(BotCommandException.class, () ->
-                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue, false, false, null, null, null)
+                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue, false, "", null, null, null)
         );
         assertTrue(exception.getMessage().contains("Criteria Value must not be empty."));
 
@@ -238,7 +238,7 @@ public class DeleteByConditionTest {
         assertDoesNotThrow(() -> {
             String result = deleteByCondition.action(
                     inputFilePath, column, Condition, criteriaValue,
-                    false, false, null, null, null
+                    false, "", null, null, null
             ).get();
             assertTrue(result.contains(inputFilePath));
         });
@@ -252,7 +252,7 @@ public class DeleteByConditionTest {
         String Condition = "Equals to =";
         String criteriaValue = "Fathi";
         Boolean addNewCondition = true;
-        Boolean logicalOperator = false;
+        String logicalOperator = "AND";
         String column2 = "";
         String Condition2 = "Equals to =";
         String criteriaValue2 = "25";
@@ -275,7 +275,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "fathi";
 
         Exception exception = assertThrows(BotCommandException.class, () ->
-                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,false,null,null,null)
+                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,"",null,null,null)
         );
         assertTrue(exception.getMessage().contains("Error: "));
     }
@@ -288,7 +288,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "test";
 
         Exception exception = assertThrows(BotCommandException.class, () ->
-                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue, false, false, null, null, null)
+                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue, false, "", null, null, null)
         );
         System.out.println(exception.getMessage());
         assertTrue(exception.getMessage().contains("Input Excel File Path must not be empty"));
@@ -302,7 +302,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "test";
 
         Exception exception = assertThrows(BotCommandException.class, () ->
-                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue, false, false, null, null, null)
+                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue, false, "", null, null, null)
         );
         assertTrue(exception.getMessage().contains("Specified Column must not be empty"));
     }
@@ -315,7 +315,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "";
 
         Exception exception = assertThrows(BotCommandException.class, () ->
-                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue, false, false, null, null, null)
+                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue, false, "", null, null, null)
         );
         assertTrue(exception.getMessage().contains("Criteria Value must not be empty"));
     }
@@ -328,7 +328,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "test";
 
         Exception exception = assertThrows(BotCommandException.class, () ->
-                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue, false, false, null, null, null)
+                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue, false, "", null, null, null)
         );
         assertTrue(exception.getMessage().contains("Condition must be one of:"));
     }
@@ -342,7 +342,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "fathi";
 
         Exception exception = assertThrows(BotCommandException.class, () ->
-                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,false,null,null,null)
+                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,"",null,null,null)
         );
         assertTrue(exception.getMessage().contains("Invalid column letter"));
     }
@@ -356,7 +356,7 @@ public class DeleteByConditionTest {
         String criteriaValue = "fathi";
 
         Exception exception = assertThrows(BotCommandException.class, () ->
-                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,false,null,null,null)
+                deleteByCondition.action(inputFilePath, column, Condition, criteriaValue,false,"",null,null,null)
         );
         assertTrue(exception.getMessage().contains("Invalid column letter"));
     }

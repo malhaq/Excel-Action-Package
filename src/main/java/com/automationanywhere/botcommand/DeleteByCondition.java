@@ -68,15 +68,16 @@ public class DeleteByCondition {
             Boolean addNewCondition,
 
 
-            @Idx(index = "6", type = BOOLEAN)
+            @Idx(index = "6", type = SELECT, options = {
+                    @Idx.Option(index = "6.1",pkg = @Pkg(label = "OR",value = "OR")),
+                    @Idx.Option(index = "6.2",pkg = @Pkg(label = "AND",value = "AND"))
+            })
             @Pkg(label = "AND, OR operator")
-            @NotNull
-            Boolean logicalOperator,
+            String logicalOperator,
 
 
             @Idx(index = "7", type = TEXT)
             @Pkg(label = "Specified Column (e.g., A)")
-            @NotEmpty
             String column2,
 
             @Idx(index = "8", type = SELECT, options = {
@@ -86,12 +87,10 @@ public class DeleteByCondition {
                     @Idx.Option(index = "8.4", pkg = @Pkg(label = "Doesn't contain", node_label = "Delete where cell value does not contain {{criteriaValue2}}", value = "Doesn't Contain"))
             })
             @Pkg(label = "Condition")
-            @NotEmpty
             String Condition2,
 
             @Idx(index = "9", type = TEXT)
             @Pkg(label = "Criteria Value ")
-            @NotEmpty
             String criteriaValue2
 
 
@@ -193,10 +192,11 @@ public class DeleteByCondition {
                     default:
                         throw new RuntimeException("Some thing wrong you have reached the Default value in the switch statement");
                 }
-            } else {
+            }
+            else {
 
                 int startColumn2 = ExcelUtils.columnLetterToIndex(column2);
-                if (logicalOperator) {
+                if (logicalOperator.equals("OR")) {
                     // OR operator
                     switch (Condition) {
                         case "Equals to =":
