@@ -40,11 +40,6 @@ public class ConcatenateTwoColumns {
             @NotEmpty
             String inputFilePath,
 
-//            @Idx(index = "2", type = TEXT)
-//            @Pkg(label = "Output Excel File Path", description = "Path where the modified Excel file will be saved.")
-//            @NotEmpty
-//            String outputFilePath,
-
             @Idx(index = "2", type = TEXT)
             @Pkg(label = "First Column (e.g., A)", description = "The column letter used for the first column to concatenate.")
             @NotEmpty

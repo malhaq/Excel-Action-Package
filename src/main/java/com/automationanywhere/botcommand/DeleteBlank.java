@@ -34,11 +34,10 @@ public class DeleteBlank {
 
     //Identify the entry point for the action. Returns a Value<String> because the return type is String.
     @Execute
-    public Value<String> action(@Idx(index = "1", type = FILE) @Pkg(label = "Input Excel File Path") @NotEmpty String inputFilePath,
+    public Value<String> action(
+            @Idx(index = "1", type = FILE) @Pkg(label = "Input Excel File Path") @NotEmpty String inputFilePath,
 
-//                                @Idx(index = "2", type = TEXT) @Pkg(label = "Output Excel File Path") @NotEmpty String outputFilePath,
-
-                                @Idx(index = "2", type = TEXT) @Pkg(label = "Specified Column (e.g., A)") @NotEmpty String column
+            @Idx(index = "2", type = TEXT) @Pkg(label = "Specified Column (e.g., A)") @NotEmpty String column
 
     ) {
         try (Workbook workbook = ExcelUtils.openWorkbook(inputFilePath)) {

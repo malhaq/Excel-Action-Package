@@ -43,12 +43,6 @@ public class RemoveDuplicates {
             @NotEmpty
             String inputFilePath,
 
-
-//            @Idx(index = "2", type = TEXT)
-//            @Pkg(label = "Output Excel File Path",description = "Path where the modified Excel file will be saved.")
-//            @NotEmpty
-//            String outputFilePath,
-
             @Idx(index = "2", type = TEXT)
             @Pkg(label = "Specified Column (e.g., A)",description = "The column letter used for duplicate detection.")
             @NotEmpty
@@ -95,9 +89,6 @@ public class RemoveDuplicates {
             throw new BotCommandException("File processing error: " + e.getMessage());
         }
     }
-
-
-
 
 }
 

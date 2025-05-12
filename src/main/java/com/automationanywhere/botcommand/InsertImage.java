@@ -96,10 +96,6 @@ public class InsertImage {
         if (cell == null || cell.trim().isEmpty()) {
             throw new BotCommandException("Target cell cannot be empty.");
         }
-//        if (!cell.matches("^[A-Za-z]+[0-9]+$")) {
-//            throw new BotCommandException("Target cell format is invalid. Example: A1, B5, AB6");
-//        }
-
 
         int startColumn, startRow, endColumn, endRow;
 

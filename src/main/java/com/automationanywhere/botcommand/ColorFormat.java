@@ -40,11 +40,6 @@ public class ColorFormat {
             @NotEmpty
             String inputFilePath,
 
-//            @Idx(index = "2", type = FILE)
-//            @Pkg(label = "File path to save the modified Excel file")
-//            @NotEmpty
-//            String outputFilePath,
-
             @Idx(index = "2", type = SELECT, options = {
                     @Idx.Option(index = "2.1", pkg = @Pkg(label = "By Column", node_label = "Color the cells in {{range}}", value = "Column")),
                     @Idx.Option(index = "2.2", pkg = @Pkg(label = "By Row", node_label = "Color all cells in row{{range}}", value = "Row"))

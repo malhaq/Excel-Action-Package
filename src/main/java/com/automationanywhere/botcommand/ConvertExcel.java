@@ -47,12 +47,6 @@ public class ConvertExcel {
             @NotEmpty
             String inputFilePath,
 
-
-//            @Idx(index = "2", type = TEXT)
-//            @Pkg(label = "Output File", description = "Path where the converted file will be saved.")
-//            @NotEmpty
-//            String outputFilePath,
-
             @Idx(index = "2", type = SELECT, options = {
                     @Idx.Option(index = "2.1", pkg = @Pkg(label = "Excel (.xls) to Excel (.xlsx)", value = "XLStoXLSX")),
                     @Idx.Option(index = "2.2", pkg = @Pkg(label = "Excel (.xlsx) to CSV", value = "XLSXtoCSV")),

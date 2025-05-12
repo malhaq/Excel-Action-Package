@@ -41,11 +41,6 @@ public class ColumnConverter {
             @NotEmpty
             String inputFilePath,
 
-//            @Idx(index = "2", type = TEXT)
-//            @Pkg(description = "Provide the full path you want the out put file to be stored in." ,label = "[[ConvertColumn.outputPath.label]]")
-//            @NotEmpty
-//            String outputFilePath,
-
             @Idx(index = "2", type = TEXT)
             @Pkg(label = "Column Range (e.g., A,E)")
             @NotEmpty

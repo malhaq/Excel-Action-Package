@@ -43,12 +43,6 @@ public class RemoveSpecialCharacters {
             @NotEmpty
             String inputFilePath,
 
-
-//            @Idx(index = "2", type = TEXT)
-//            @Pkg(label = "Output Excel File Path", description = "Path where the modified Excel file will be saved.")
-//            @NotEmpty
-//            String outputFilePath,
-
             @Idx(index = "2", type = TEXT)
             @Pkg(label = "Target Column", description = "Enter the column letter (e.g., A, B, C) from which special characters should be removed.")
             @NotEmpty
@@ -85,11 +79,9 @@ public class RemoveSpecialCharacters {
                     val = String.valueOf(cell.getNumericCellValue());
                 } else {
                     val = cell.getStringCellValue();
-//                    System.out.println(val);
                 }
                 val = val.replace(specialCharacter, "");
                 cell.setCellValue(val);
-//                System.out.println("");
 
             }
 

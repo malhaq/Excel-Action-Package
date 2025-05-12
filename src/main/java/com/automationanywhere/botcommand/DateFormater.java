@@ -85,6 +85,7 @@ public class DateFormater {
 
     private void formatColumn(String inputFile, int targetColumn, String format, Boolean headers) throws Exception {
         File file = new File(inputFile);
+        // create backup and temp file to avoid original file corruption
         File backupFile = createBackupFile(file);
         File tempFile = File.createTempFile("excel_date", ".xlsx");
 
@@ -163,7 +164,7 @@ public class DateFormater {
                     "dd MMM yyyy",
                     "MMM dd, yyyy",
                     "dd-MMM-yy",
-                    "yyyy-MMM-dd",
+                    "yyyy-MMM-dd"
             };
 
             for (String format : dateFormats) {
@@ -172,21 +173,21 @@ public class DateFormater {
                     sdf.setLenient(false); // Strict parsing
                     return sdf.parse(str);
                 } catch (ParseException e) {
-                    // Try next format
+                    // try next format
                 }
             }
 
-            // Try Excel serial date (numeric string)
+            // try Excel serial date (numeric string)
             try {
                 double numericValue = Double.parseDouble(str);
                 if (numericValue > 0) {
                     return DateUtil.getJavaDate(numericValue);
                 }
             } catch (NumberFormatException e) {
-                // Not a numeric string
+                // not a numeric string
             }
 
-            // Try SQL date format as last resort
+            // try SQL date format
             try {
                 return java.sql.Date.valueOf(str);
             } catch (IllegalArgumentException e) {
@@ -194,7 +195,7 @@ public class DateFormater {
                         ". Supported formats: MM/dd/yyyy, dd/MM/yyyy, yyyy-MM-dd, etc.");
             }
         }else if (value instanceof Number) {
-            // Handle numeric values (Excel serial dates)
+            // handle numeric values (Excel serial dates)
             return DateUtil.getJavaDate(((Number) value).doubleValue());
         }
 

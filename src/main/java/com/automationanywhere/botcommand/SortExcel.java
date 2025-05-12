@@ -94,6 +94,7 @@ public class SortExcel {
 
     private void sortExcelFile(String inputFile, int targetColumn, String sortBy, boolean ascending, boolean headers) throws IOException {
         File file = new File(inputFile);
+        // create backup and temp file to avoid original file corruption
         File backupFile = createBackupFile(file);
         File tempFile = File.createTempFile("excel_date", ".xlsx");
 
